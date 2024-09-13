@@ -7,6 +7,9 @@ jobs:
   my_job:
     runs-on: self-hosted   
     steps: 
-    - name: Test
-      run: |
-       docker run hello-world
+    - name: checkout repo
+      uses: action/checkout@v4
+    - name: Show Docker Version
+      run: docker --version
+    - name: Docker build
+      run: docker build -t testFile:v1 -f test-docker/dockerFile test-docker
