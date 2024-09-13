@@ -13,5 +13,4 @@ jobs:
     - name: Test
       run: |
         cd docker-demo
-        docker build -t sampleapp:v1 .
         docker run -p 8080:80 sampleapp:v1
