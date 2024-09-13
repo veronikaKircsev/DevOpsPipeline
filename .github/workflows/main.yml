@@ -15,6 +15,8 @@ jobs:
       run: docker build -t myapp:v1 -f Dockerfiles/DockerBuild .
     - name: Create tmp Folder
       run: mkdir -p /tmp/app
+    - name: Docker show container
+      run: docker ps -a
     - name: Docker copy jar from container
       run: docker cp myapp:/app/build/libs/*.jar /tmp/app/app.jar
     - name: Docker build run container
