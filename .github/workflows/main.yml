@@ -17,4 +17,7 @@ jobs:
     - name: TestIndex
       run: |
         docker run -p 8080:80 sampleapp:v1
-    
+    - name: Verify Container is Running
+      run: |
+          docker ps
+          docker logs sampleapp_container
