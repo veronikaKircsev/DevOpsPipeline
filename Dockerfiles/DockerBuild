@@ -9,6 +9,3 @@ COPY . /app
 
 # Build the project using Gradle
 RUN gradle build --no-daemon
-
-# Copy the jar file from the Gradle build stage
-COPY --from=build /app/build/libs/*.jar /app/app.jar
