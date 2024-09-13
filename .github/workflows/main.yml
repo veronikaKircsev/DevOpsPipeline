@@ -12,4 +12,4 @@ jobs:
     - name: Show Docker Version
       run: docker --version
     - name: Docker build
-      run: docker build -t TestApp:v1 -f docker-test/Dockerfile docker-test
+      run: docker build -t testapp:v1 -f docker-test/Dockerfile docker-test
