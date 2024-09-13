@@ -13,4 +13,4 @@ jobs:
     - name: Test
       run: |
         cd docker-demo
-        docker build -t sampleapp:v1 .
+        docker build -t sampleapp:v1
