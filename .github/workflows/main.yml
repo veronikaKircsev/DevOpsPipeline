@@ -6,7 +6,8 @@ on:
 jobs:
   my_job:
     runs-on: self-hosted   
-    steps: 
+    steps:
+    - uses: actions/checkout@v4
     - name: Test
       run: |
        docker run hello-world
