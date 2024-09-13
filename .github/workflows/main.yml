@@ -21,3 +21,7 @@ jobs:
       run: |
           docker ps
           docker logs sampleapp_container
+    - name: Clean Up
+      run: |
+          docker stop sampleapp_container
+          docker rm sampleapp_container
