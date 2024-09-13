@@ -14,7 +14,7 @@ jobs:
     - name: Docker build Gradle
       run: docker build -t testapp:v1 -f Dockerfiles/DockerBuild .
     - name: Create tmp Folder
-      run: mkdir -p tmp/app
+      run: mkdir -p /tmp/app
     - name: Docker copy jar from container
       run: docker cp testapp:/app/build/libs/*.jar /tmp/app/app.jar
     - name: Docker build run container
