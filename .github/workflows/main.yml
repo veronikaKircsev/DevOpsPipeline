@@ -13,5 +13,7 @@ jobs:
       run: docker --version
     - name: Docker build Gradle
       run: docker build -t testapp:v1 -f Dockerfiles/DockerBuild .
+    - name: Docker copy jar from container
+      run: docker cp testapp:/app/app.jar /tmp/app/app.jar
     - name: Docker build run container
       run: docker build -t testapp:v1 -f Dockerfiles/DockerRun .
