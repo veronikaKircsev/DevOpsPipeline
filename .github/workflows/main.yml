@@ -12,4 +12,5 @@ jobs:
       run: ls -al
     - name: Test
       run: |
-       docker run hello-world
+        cd docker-demo
+        docker build -t sampleapp:v1
