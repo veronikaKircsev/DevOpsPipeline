@@ -17,6 +17,6 @@ jobs:
       run: |
         id=$(docker create myappcompiled:v1)
         mkdir -p /tmp/app
-        docker cp $id:/app/build/libs/*.jar /tmp/app/app.jar
+        docker cp $id:/app/ /tmp/app
         docker rm -v $id
 
