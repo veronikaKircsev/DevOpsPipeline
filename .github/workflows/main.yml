@@ -12,16 +12,7 @@ jobs:
     - name: Show Docker Version
       run: docker --version
     - name: compile with docker
-      run: docker build -t myappcompiled:v1 -f Dockerfiles/DockerBuild .
-    - name: Copy compiled app.jar
-      run: |
-        id=$(docker create myappcompiled:v1)
-        mkdir -p ./tmp/app
-        docker cp $id:/app/app.jar ./tmp/app/app.jar
-        docker rm -v $id
-        pwd
-        cd ./tmp/app
-        pwd
+      run: docker build -t myapp/compiled -f Dockerfiles/DockerBuild .
     - name: Create Execute Docker 
       run: docker build -t myapp:v1 -f Dockerfiles/DockerRun .
 
