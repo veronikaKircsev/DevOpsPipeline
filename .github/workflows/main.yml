@@ -9,14 +9,18 @@ jobs:
     steps:
     - name: checkout repo
       uses: actions/checkout@v4
+      
     - name: Show Docker Version
-      run: docker --version
-    - name: compile with docker
-      run: docker build -t myapp/compiled -f Dockerfiles/DockerBuild .
-    - name: Create Execute Docker 
-      run: docker build -t myapp:v1 -f Dockerfiles/DockerRun .
-    - name: Docker Cleanup
-      run: docker images rm myapp/compiled
+      run: docker --version 
+      
+    - name: compile App with docker to myapp/compiled image
+      run: docker build -t myapp/compiled -f Dockerfiles/DockerfileCompile .
+      
+    - name: Create Runnable Dockerimage for Myapp 
+      run: docker build -t myapp:v1 -f Dockerfiles/DockerfileRunnable . 
+      
+    - name: Cleanup Docker image
+      run: docker image rm myapp/compiled
 
 
       
