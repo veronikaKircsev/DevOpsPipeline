@@ -16,10 +16,9 @@ jobs:
     - name: Copy compiled app.jar
       run: |
         id=$(docker create myappcompiled:v1)
-        mkdir -p /tmp/app
-        docker cp $id:/app/ /tmp/app
+        mkdir -p ./tmp/app
+        docker cp $id:/app/ ./tmp/app
         docker rm -v $id
-        ls /tmp/app
     - name: Create Execute Docker 
       run: docker build -t myapp:v1 -f Dockerfiles/DockerRun .
 
