@@ -1,6 +1,7 @@
 ########################################################
-#    1) Stage for Build                                #
+#  Docker for compile the app                          #
 ########################################################
+
 # Use a Gradle image as the base image
 FROM gradle:7.6.4-jdk17
 
