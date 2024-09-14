@@ -1,5 +1,8 @@
+########################################################
+#    1) Stage for Build                                #
+########################################################
 # Use a Gradle image as the base image
-FROM gradle:7.6.4-jdk17 as build
+FROM gradle:7.6.4-jdk17 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -11,7 +14,9 @@ COPY . /app
 RUN gradle build --no-daemon
 
 
-
+########################################################
+#    2) Stage for Execute                              #
+########################################################
 
 # Use an OpenJDK image to run the application
 FROM openjdk:17-alpine
