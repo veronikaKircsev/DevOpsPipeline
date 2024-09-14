@@ -19,6 +19,7 @@ jobs:
         mkdir -p /tmp/app
         docker cp $id:/app/ /tmp/app
         docker rm -v $id
+        ls /tmp/app
     - name: Create Execute Docker 
       run: docker build -t myapp:v1 -f Dockerfiles/DockerRun .
 
