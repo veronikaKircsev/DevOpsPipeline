@@ -16,7 +16,6 @@ jobs:
     - name: Copy compiled app.jar
       run: |
         id=$(docker create myappcompiled:v1)
-        rmdir ./tmp
         mkdir -p ./tmp/app
         docker cp $id:/app/app.jar ./tmp/app/app.jar
         docker rm -v $id
