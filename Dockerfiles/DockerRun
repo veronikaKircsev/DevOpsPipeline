@@ -1,8 +1,8 @@
 ########################################################
-#    2) Stage for Execute                              #
+# Docker to create runable image                       #
 ########################################################
 # Use image tag "myapp/compiled" that was used when building
-FROM myapp/builder AS builder
+FROM myapp/compiled AS builder
 # Use an OpenJDK image to run the application
 FROM openjdk:17-alpine
 
