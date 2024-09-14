@@ -1,11 +1,11 @@
 # Use an OpenJDK image to run the application
-FROM openjdk:17
+FROM openjdk:17-alpine
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the jar file from the Gradle build stage
-COPY  /tmp/app /app/app.jar
+# Copy the compiled jar from tmpfolder
+COPY  /tmp/app/ /app/
 
 # Expose the application port
 EXPOSE 8082
