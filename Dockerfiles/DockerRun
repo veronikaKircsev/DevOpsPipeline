@@ -1,14 +1,21 @@
+########################################################
+#    2) Stage for Execute                              #
+########################################################
+# Use image tag "myapp/builder" that was used when building
+FROM myapp/builder AS builder
 # Use an OpenJDK image to run the application
 FROM openjdk:17-alpine
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the compiled jar from tmpfolder
-COPY --from=build  /tmp/app/*.jar /app/app.jar
+# Copy the jar file from the Gradle build stage
+COPY --from=builder /app/build/libs/*.jar /app/app.jar
 
 # Expose the application port
 EXPOSE 8082
 
 # Set the command to run the application
 CMD ["java", "-jar", "/app/app.jar"]
+
+
