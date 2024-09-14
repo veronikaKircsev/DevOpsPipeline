@@ -1,5 +1,5 @@
 # Use an OpenJDK image to run the application
-FROM openjdk:17-jre-slim
+FROM openjdk:17
 
 # Set the working directory
 WORKDIR /app
