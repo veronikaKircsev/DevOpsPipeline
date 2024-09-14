@@ -15,4 +15,9 @@ jobs:
       run: docker build -t myapp/compiled -f Dockerfiles/DockerBuild .
     - name: Create Execute Docker 
       run: docker build -t myapp:v1 -f Dockerfiles/DockerRun .
+    - name: Docker Cleanup
+      run: docker images rm myapp/compiled
+
+
+      
 
