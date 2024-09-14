@@ -12,12 +12,11 @@ jobs:
     - name: Show Docker Version
       run: docker --version
     - name: Docker build Gradle
-      run: docker build -t myapp:v1 -f Dockerfiles/DockerBuild .
-    - name: Create tmp Folder
-      run: mkdir -p /tmp/app
-    - name: Docker show container
-      run: docker ps -a
-    - name: Docker copy jar from container
-      run: docker cp myapp:/app/build/libs/*.jar /tmp/app/app.jar
-    - name: Docker build run container
-      run: docker build -t testapp:v1 -f Dockerfiles/DockerRun .
+      run: docker build -t myappcompiled:v1 -f Dockerfiles/DockerBuild .
+    - name: Copy compiled app.jar
+      run: |
+        id=$(docker create myappcompiled)
+        mkdir -p /tmp/app
+        docker cp $id:/app/build/libs/*.jar /tmp/app/app.jar
+        docker rm -v $id
+
