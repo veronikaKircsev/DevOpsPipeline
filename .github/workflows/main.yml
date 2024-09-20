@@ -33,7 +33,11 @@ jobs:
         docker run --rm \
         --volume "$(pwd):/data" \
         --user $(id -u):$(id -g) \
-        pandoc/latex README.md -o outfile.epub
+        pandoc/latex README.md -o index.html
+
+    - name: nginx
+      run: |
+        docker build -t custom-docs-nginx -f Dockerfiles/DockerFileNGINX .
     
 
     - name: Create Runnable Dockerimage for Myapp 
