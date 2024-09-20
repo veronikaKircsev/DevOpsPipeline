@@ -18,8 +18,8 @@ jobs:
       
     - name: sonarQubeScanner
       run: | 
-       id=$(docker create myapp/compiled)
-       docker cp $id:app/build/ ./build
+       docker create --name myappCompiled myapp/compiled
+       docker cp myappCompiled:app/build/ ./build
 
        docker run \
        --rm \
@@ -29,7 +29,7 @@ jobs:
        -v "${PWD}:/usr/src" \
        sonarsource/sonar-scanner-cli
 
-       docker rm $id
+       
 
        
        
@@ -39,7 +39,7 @@ jobs:
       
     - name: Cleanup Docker image
       run: |
-       
+       docker rm myappCompiled
        docker image rm myapp/compiled
 
 
