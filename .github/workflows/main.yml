@@ -20,7 +20,6 @@ jobs:
       run: | 
        docker create --name myappCompiled myapp/compiled
        docker cp myappCompiled:app/build/ ./build
-
        docker run \
        --rm \
        -e SONAR_HOST_URL="${{ vars.URL }}" \
@@ -28,12 +27,7 @@ jobs:
        -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${{ vars.KEY }} -Dsonar.sources=src/main -Dsonar.java.libraries=build/libs -Dsonar.java.binaries=build/classes -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml -Dsonar.junit.reportsPath=build/test-results" \
        -v "${PWD}:/usr/src" \
        sonarsource/sonar-scanner-cli
-
-       
-
-       
-       
-      
+ 
     - name: Create Runnable Dockerimage for Myapp 
       run: docker build -t myapp:v1 -f Dockerfiles/DockerfileRunnable . 
       
@@ -41,8 +35,3 @@ jobs:
       run: |
        docker rm myappCompiled
        docker image rm myapp/compiled
-
-
-
-      
-
