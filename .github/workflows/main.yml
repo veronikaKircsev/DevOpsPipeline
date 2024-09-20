@@ -28,13 +28,18 @@ jobs:
        -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${{ vars.KEY }} -Dsonar.sources=src/main -Dsonar.java.libraries=build/libs -Dsonar.java.binaries=build/classes -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml -Dsonar.junit.reportsPath=build/test-results" \
        -v "${PWD}:/usr/src" \
        sonarsource/sonar-scanner-cli
+
+       docker rm $id
+
+       
+       
       
     - name: Create Runnable Dockerimage for Myapp 
       run: docker build -t myapp:v1 -f Dockerfiles/DockerfileRunnable . 
       
     - name: Cleanup Docker image
       run: |
-       docker rm $id
+       
        docker image rm myapp/compiled
 
 
