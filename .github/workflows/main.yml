@@ -16,7 +16,7 @@ jobs:
     - name: compile App with docker to myapp/compiled image
       run: docker build -t myapp/compiled -f Dockerfiles/DockerfileCompile .
 
-    - name: sonaCubeScanner
+    - name: sonarQubeScanner
       run: | 
        docker run \
        --rm \
@@ -25,6 +25,7 @@ jobs:
        -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${{ vars.KEY }} \
        -Dsonar.sources=src/main -Dsonar.java.libraries=build/libs -Dsonar.java.binaries=build/classes -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml -Dsonar.junit.reportsPath=build/test-results" \
        -v "${PWD}:/usr/src" \
+       -v $(pwd)/build:/usr/src/build \
        sonarsource/sonar-scanner-cli
       
     - name: Create Runnable Dockerimage for Myapp 
