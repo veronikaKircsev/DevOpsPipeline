@@ -15,9 +15,16 @@ jobs:
       
     - name: compile App with docker to myapp/compiled image
       run: docker build -t myapp/compiled -f Dockerfiles/DockerfileCompile .
+      
+    - name: compile App with docker to myapp/compiled image
+      run: docker build -t myapp/compiled -f Dockerfiles/DockerfileCompile .
+      
 
     - name: sonarQubeScanner
       run: | 
+       id=$(docker create myapp/compiled)
+       docker cp &id:app/build/ ./build
+
        docker run \
        --rm \
        -e SONAR_HOST_URL="${{ vars.URL }}" \
