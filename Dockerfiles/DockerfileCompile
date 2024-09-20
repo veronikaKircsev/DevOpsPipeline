@@ -13,3 +13,7 @@ COPY . /app
 
 # Build the project using Gradle
 RUN gradle build --no-daemon
+
+# NEW Stage for handling test reports
+FROM scratch AS reporter
+COPY --from=builder /source/build/reports/tests /reports
