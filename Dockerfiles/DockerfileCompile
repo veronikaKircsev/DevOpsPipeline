@@ -13,3 +13,4 @@ COPY . /app
 
 # Build the project using Gradle
 RUN gradle build --no-daemon
+
