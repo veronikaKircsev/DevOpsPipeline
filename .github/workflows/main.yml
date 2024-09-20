@@ -23,7 +23,7 @@ jobs:
     - name: sonarQubeScanner
       run: | 
        id=$(docker create myapp/compiled)
-       docker cp &id:app/build/ ./build
+       docker cp $id:app/build/ ./build
 
        docker run \
        --rm \
