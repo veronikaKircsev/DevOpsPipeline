@@ -16,10 +16,6 @@ jobs:
     - name: compile App with docker to myapp/compiled image
       run: docker build -t myapp/compiled -f Dockerfiles/DockerfileCompile .
       
-    - name: compile App with docker to myapp/compiled image
-      run: docker build -t myapp/compiled -f Dockerfiles/DockerfileCompile .
-      
-
     - name: sonarQubeScanner
       run: | 
        id=$(docker create myapp/compiled)
