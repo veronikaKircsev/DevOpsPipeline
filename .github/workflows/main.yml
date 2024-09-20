@@ -33,7 +33,9 @@ jobs:
       run: docker build -t myapp:v1 -f Dockerfiles/DockerfileRunnable . 
       
     - name: Cleanup Docker image
-      run: docker image rm myapp/compiled
+      run: |
+       docker rm $id
+       docker image rm myapp/compiled
 
 
 
