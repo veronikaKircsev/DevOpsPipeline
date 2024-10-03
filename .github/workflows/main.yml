@@ -44,5 +44,5 @@ jobs:
 
     - name: Cleanup Docker image
       run: |
-       docker rm 84a4cc606f1f3375cc25cdf2fa59cb9de1762e3382053ca508e6e2ce96868f89
+       docker rm myappCompiled
        docker image rm myapp/compiled
