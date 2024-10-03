@@ -3,6 +3,10 @@ on:
     branches:
     - main
     - 'develop/**'
+
+env:
+  VERSION: 0.0.1
+
 jobs:
   my_job:
     runs-on: self-hosted   
@@ -14,11 +18,11 @@ jobs:
       run: docker --version 
       
     - name: compile App with docker to myapp/compiled image
-      run: docker build -t myapp/compiled -f Dockerfiles/DockerfileCompile .
+      run: docker build -t myapp/compiled:$VERSION -f Dockerfiles/DockerfileCompile .
       
     - name: sonarQubeScanner
       run: | 
-       docker create --name myappCompiled myapp/compiled
+       docker create --name myappCompiled  myapp/compiled:$VERSION
        docker cp myappCompiled:app/build/ ./build
        docker run \
        --rm \
@@ -27,10 +31,11 @@ jobs:
        -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${{ vars.KEY }} -Dsonar.sources=src/main -Dsonar.java.libraries=build/libs -Dsonar.java.binaries=build/classes -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml -Dsonar.junit.reportsPath=build/test-results" \
        -v "${PWD}:/usr/src" \
        sonarsource/sonar-scanner-cli
+
  
     - name: Create Runnable Dockerimage for Myapp 
-      run: docker build -t myapp:v1 -f Dockerfiles/DockerfileRunnable . 
-      
+      run: docker build -t myapp:v1:$VERSION -f Dockerfiles/DockerfileRunnable .
+
     - name: Cleanup Docker image
       run: |
        docker rm myappCompiled
