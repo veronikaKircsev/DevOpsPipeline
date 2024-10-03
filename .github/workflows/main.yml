@@ -36,6 +36,12 @@ jobs:
     - name: Create Runnable Dockerimage for Myapp 
       run: docker build -t myapp:v1-$VERSION -f Dockerfiles/DockerfileRunnable .
 
+    - name: Tag the Docker image
+      run: docker tag myapp:v1-$VERSION 10.0.40.162:5000/team6/myapp:v1-$VERSION
+
+    - name: Push to Registry
+      run: docker image push 10.0.40.162:5000/team6/myapp:v1-$VERSION
+
     - name: Cleanup Docker image
       run: |
        docker rm myappCompiled
