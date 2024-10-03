@@ -21,7 +21,8 @@ jobs:
       run: docker build -t myapp/compiled -f Dockerfiles/DockerfileCompile .
       
     - name: sonarQubeScanner
-      run: | 
+      run: |
+       docker rm myappCompiled
        docker create --name myappCompiled  myapp/compiled
        docker cp myappCompiled:app/build/ ./build
        docker run \
