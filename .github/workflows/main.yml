@@ -22,7 +22,7 @@ jobs:
       
     - name: sonarQubeScanner
       run: |
-       docker rm myappCompiled
+       docker container rm myappCompiled || true
        docker create --name myappCompiled  myapp/compiled
        docker cp myappCompiled:app/build/ ./build
        docker run \
@@ -45,5 +45,5 @@ jobs:
 
     - name: Cleanup Docker image
       run: |
-       docker rm myappCompiled
+       docker container rm myappCompiled
        docker image rm myapp/compiled
