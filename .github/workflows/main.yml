@@ -45,7 +45,7 @@ jobs:
       run: docker run --rm -it -v ${PWD}:/docs squidfunk/mkdocs-material build
 
     - name: deploy Mkdocs
-      run: docker run --rm -it -v ~/.ssh:/root/.ssh -v ${PWD}:/docs squidfunk/mkdocs-material gh-deploy
+      run: docker run --rm -v ~/.ssh:/root/.ssh -v ${PWD}:/docs squidfunk/mkdocs-material gh-deploy
 
     - name: Create Runnable Dockerimage for Myapp
       run: docker build -t myapp:v1-$VERSION -f Dockerfiles/DockerfileRunnable .
