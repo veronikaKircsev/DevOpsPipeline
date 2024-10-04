@@ -45,7 +45,7 @@ jobs:
       run: docker run --rm -v "$(pwd):/docs" -u $(id -u):$(id -g) squidfunk/mkdocs-material build
 
     - name: nginx
-      run: docker build -t custom-docs-nginx -f Dockerfiles/DockerFileNGINX .
+      run: docker build -t custom-docs-nginx -f Dockerfiles/DockerfileNGINX .
 
     - name: Create Runnable Dockerimage for Myapp
       run: docker build -t myapp:v1-$VERSION -f Dockerfiles/DockerfileRunnable .
