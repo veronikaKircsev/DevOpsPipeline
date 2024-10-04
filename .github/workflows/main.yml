@@ -42,7 +42,7 @@ jobs:
         --standalone --toc --toc-depth=2 --highlight-style=tango
 
     - name: build Mkdocs html
-      run: docker run --rm -it -v ${PWD}:/docs squidfunk/mkdocs-material build
+      run: docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
 
     - name: deploy Mkdocs
       run: docker run --rm -v ~/.ssh:/root/.ssh -v ${PWD}:/docs squidfunk/mkdocs-material gh-deploy
