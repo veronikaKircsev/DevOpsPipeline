@@ -33,7 +33,14 @@ jobs:
        -v "${PWD}:/usr/src" \
        sonarsource/sonar-scanner-cli
 
- 
+    - name: pandocFile
+      run: |
+        docker run --rm \
+        --volume "$(pwd):/data" \
+        --user $(id -u):$(id -g) \
+        pandoc/latex README.md -o documentation.pdf --pdf-engine=xelatex \
+        --standalone --toc --toc-depth=2 --highlight-style=tango
+
     - name: Create Runnable Dockerimage for Myapp 
       run: docker build -t myapp:v1-$VERSION -f Dockerfiles/DockerfileRunnable .
 
