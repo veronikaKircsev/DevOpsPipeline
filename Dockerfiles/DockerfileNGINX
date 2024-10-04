@@ -4,5 +4,3 @@ FROM nginx:alpine
 COPY docs/seit/ /usr/share/nginx/html/index.html
 
 EXPOSE 80
-
-# docker run -d -p 8080:80 custom-docs-nginx
