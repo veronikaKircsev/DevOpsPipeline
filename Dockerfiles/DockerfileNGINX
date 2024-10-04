@@ -1,6 +1,12 @@
 
 FROM nginx:alpine
 
+# Setze den Benutzer, unter dem die folgenden RUN-Befehle ausgeführt werden
+USER $(id -u):$(id -g)
+
+# Erstelle das Verzeichnis unter dem angegebenen Benutzer
+RUN mkdir -p /usr/share/nginx/html
+
 COPY site/ /usr/share/nginx/html/index.html
 
 EXPOSE 80
