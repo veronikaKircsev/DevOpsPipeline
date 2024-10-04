@@ -41,11 +41,17 @@ jobs:
         pandoc/latex README.md -o documentation.pdf --pdf-engine=xelatex \
         --standalone --toc --toc-depth=2 --highlight-style=tango
 
+    - name: start Mkdocs
+      run: docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
+
     - name: build Mkdocs html
-      run: docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
+      run: docker run -it --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
 
     - name: deploy Mkdocs
-      run: docker run --rm -v ~/.ssh:/root/.ssh -v ${PWD}:/docs squidfunk/mkdocs-material gh-deploy
+      run: docker run -it --rm -v ~/.ssh:/root/.ssh -v ${PWD}:/docs squidfunk/mkdocs-material gh-deploy
+
+    - name: nginx
+      run: docker build -t custom-docs-nginx -f Dockerfiles/DockerFileNGINX .
 
     - name: Create Runnable Dockerimage for Myapp
       run: docker build -t myapp:v1-$VERSION -f Dockerfiles/DockerfileRunnable .
