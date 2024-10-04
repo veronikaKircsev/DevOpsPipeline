@@ -41,7 +41,13 @@ jobs:
         pandoc/latex README.md -o documentation.pdf --pdf-engine=xelatex \
         --standalone --toc --toc-depth=2 --highlight-style=tango
 
-    - name: Create Runnable Dockerimage for Myapp 
+    - name: build Mkdocs html
+      run: docker run --rm -it -v ${PWD}:/docs squidfunk/mkdocs-material build
+
+    - name: deploy Mkdocs
+      run: docker run --rm -it -v ~/.ssh:/root/.ssh -v ${PWD}:/docs squidfunk/mkdocs-material gh-deploy
+
+    - name: Create Runnable Dockerimage for Myapp
       run: docker build -t myapp:v1-$VERSION -f Dockerfiles/DockerfileRunnable .
 
     - name: Tag the Docker image

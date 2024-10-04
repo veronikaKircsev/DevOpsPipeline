@@ -1,0 +1,3 @@
+site_name: My Project Documentation
+theme:
+  name: 'material'
