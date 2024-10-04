@@ -38,7 +38,7 @@ jobs:
         docker run --rm \
         --volume "$(pwd):/data" \
         --user $(id -u):$(id -g) \
-        pandoc/latex README.md -o documentation.pdf --pdf-engine=xelatex \
+        pandoc/latex docs/README.md -o documentation.pdf --pdf-engine=xelatex \
         --standalone --toc --toc-depth=2 --highlight-style=tango
 
     - name: build Mkdocs html
