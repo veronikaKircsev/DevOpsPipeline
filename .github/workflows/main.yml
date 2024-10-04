@@ -47,9 +47,6 @@ jobs:
     - name: build Mkdocs html
       run: docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
 
-    - name: deploy Mkdocs
-      run: docker run --rm -v ~/.ssh:/root/.ssh -v ${PWD}:/docs squidfunk/mkdocs-material gh-deploy
-
     - name: nginx
       run: docker build -t custom-docs-nginx -f Dockerfiles/DockerFileNGINX .
 
