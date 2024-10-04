@@ -41,9 +41,6 @@ jobs:
         pandoc/latex README.md -o documentation.pdf --pdf-engine=xelatex \
         --standalone --toc --toc-depth=2 --highlight-style=tango
 
-    - name: start Mkdocs
-      run: docker run --rm -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
-
     - name: build Mkdocs html
       run: docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
 
