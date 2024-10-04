@@ -42,7 +42,7 @@ jobs:
         --standalone --toc --toc-depth=2 --highlight-style=tango
 
     - name: build Mkdocs html
-      run: docker run --rm "${PWD}:/docs" -w "/docs" squidfunk/mkdocs-material build
+      run: docker run --rm "${PWD}:/docs" squidfunk/mkdocs-material build
 
     - name: nginx
       run: docker build -t custom-docs-nginx -f Dockerfiles/DockerFileNGINX .
