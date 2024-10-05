@@ -68,7 +68,7 @@ jobs:
           docker pull 10.0.40.162:5000/team6/myapp:v1-${{ env.VERSION }}
           docker stop myapp:v1 || true
           docker rm myapp:v1 || true
-          docker run -d --name myapp:v1 -p 8080:80 10.0.40.163/myapp:v1-${{ env.VERSION }} '
+          docker run -d --name myapp:v1 -p 8080:80 10.0.40.162:5000/myapp:v1-${{ env.VERSION }} '
 
 
     - name: Cleanup Docker image
