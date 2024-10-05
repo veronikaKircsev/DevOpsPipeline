@@ -64,8 +64,8 @@ jobs:
     - name: Deploy on production server
       run: |
         ssh -i ${{ secrets.PROD_SERVER_SSH_KEY }} team6@10.0.40.163 '
-          docker myapp:v1 || true
-          docker myapp:v1 || true
+          docker stop myapp:v1 || true
+          docker rm myapp:v1 || true
           docker run -d --name myapp:v1 -d -p 8080:80 10.0.40.163/myapp:v1-$VERSION
 
 
