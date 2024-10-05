@@ -56,17 +56,13 @@ jobs:
     - name: Push to Registry
       run: docker image push 10.0.40.162:5000/team6/myapp:v1-$VERSION
 
-    - name: Push to production server
-      run: |
-        chmod 600 ${{ secrets.PROD_SERVER_SSH_KEY }}
-        docker save myapp:v1-$VERSION | bzip2 | ssh -i ${{ secrets.PROD_SERVER_SSH_KEY }} team6@10.0.40.163 'bunzip2 | docker load'
-
     - name: Deploy on production server
       run: |
         ssh -i ${{ secrets.PROD_SERVER_SSH_KEY }} team6@10.0.40.163 '
+          docker pull 10.0.40.162:5000/team6/myapp:v1-$VERSION
           docker stop myapp:v1 || true
           docker rm myapp:v1 || true
-          docker run -d --name myapp:v1 -d -p 8080:80 10.0.40.163/myapp:v1-$VERSION
+          docker run -d --name myapp:v1 -p 8080:80 10.0.40.163/myapp:v1-$VERSION '
 
 
     - name: Cleanup Docker image
