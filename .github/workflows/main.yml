@@ -56,9 +56,15 @@ jobs:
     - name: Push to Registry
       run: docker image push 10.0.40.162:5000/team6/myapp:v1-$VERSION
 
+    - name: Create SSH Key
+      run: |
+          mkdir -p ~/.ssh
+          printf "%s" "${{ secrets.PROD_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
     - name: Deploy on production server
       run: |
-        ssh -i ${{ secrets.PROD_SERVER_SSH_KEY }} team6@10.0.40.163 '
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no team6@10.0.40.163 '
           docker pull 10.0.40.162:5000/team6/myapp:v1-$VERSION
           docker stop myapp:v1 || true
           docker rm myapp:v1 || true
