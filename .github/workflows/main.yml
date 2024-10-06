@@ -75,3 +75,8 @@ jobs:
       run: |
        docker container rm myappCompiled
        docker image rm myapp/compiled
+        docker container prune
+        docker image prune -a
+
+      
+
