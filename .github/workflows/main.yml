@@ -51,7 +51,7 @@ jobs:
       run: docker build -t myapp -f Dockerfiles/DockerfileRunnable .
 
     - name: Tag the Docker image
-      run: docker tag myapp 10.0.40.162:5000/team6/myapp:$VERSION
+      run: docker image tag myapp 10.0.40.162:5000/team6/myapp:$VERSION
 
     - name: Push to Registry
       run: docker image push 10.0.40.162:5000/team6/myapp:$VERSION
