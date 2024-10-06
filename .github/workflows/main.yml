@@ -51,10 +51,10 @@ jobs:
       run: docker build -t myapp -f Dockerfiles/DockerfileRunnable .
 
     - name: Tag the Docker image
-      run: docker image tag myapp 10.0.40.162:5000/team6/myapp:$VERSION
+      run: docker image tag myapp 10.0.40.162:5000/team6/myapp:${VERSION}
 
     - name: Push to Registry
-      run: docker image push 10.0.40.162:5000/team6/myapp:$VERSION
+      run: docker image push 10.0.40.162:5000/team6/myapp:${VERSION}
 
     - name: Create SSH Key
       run: |
@@ -67,7 +67,7 @@ jobs:
         ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no team6@10.0.40.163 '
           docker container stop myapp || true
           docker container rm myapp || true
-          docker run --name myapp -d -p 8080:80 10.0.40.162:5000/team6/myapp:$VERSION '
+          docker run --name myapp -d -p 8080:80 10.0.40.162:5000/team6/myapp:${VERSION} '
 
 
     - name: Cleanup Docker image
