@@ -67,7 +67,8 @@ jobs:
         ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no team6@10.0.40.163 '
           docker container stop myapp || true
           docker container rm myapp || true
-          docker run --name myapp -d -p 8080:80 10.0.40.162:5000/team6/myapp:${VERSION} '
+          docker run --name myapp -d -p 8081:8080 10.0.40.162:5000/team6/myapp:${VERSION}
+        '
 
 
     - name: Cleanup Docker image
