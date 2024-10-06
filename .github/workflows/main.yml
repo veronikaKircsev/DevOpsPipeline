@@ -48,13 +48,13 @@ jobs:
       run: docker build -t custom-docs-nginx -f Dockerfiles/DockerfileNGINX .
 
     - name: Create Runnable Dockerimage for Myapp
-      run: docker build -t myapp:v1 -f Dockerfiles/DockerfileRunnable .
+      run: docker build -t myapp -f Dockerfiles/DockerfileRunnable .
 
     - name: Tag the Docker image
-      run: docker tag myapp:v1-$VERSION 10.0.40.162:5000/team6/myapp:v1
+      run: docker tag myapp-$VERSION 10.0.40.162:5000/team6/myapp
 
     - name: Push to Registry
-      run: docker image push 10.0.40.162:5000/team6/myapp:v1
+      run: docker image push 10.0.40.162:5000/team6/myapp
 
     - name: Create SSH Key
       run: |
@@ -65,18 +65,18 @@ jobs:
     - name: Deploy on production server
       run: |
         ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no team6@10.0.40.163 '
-          docker pull 10.0.40.162:5000/team6/myapp:v1
-          docker stop myapp:v1 || true
-          docker rm myapp:v1 || true
-          docker run -d --name myapp:v1 -p 8080:80 10.0.40.162:5000/team6/myapp:v1 '
+          docker pull 10.0.40.162:5000/team6/myapp
+          docker stop myapp || true
+          docker rm myapp || true
+          docker run -d --name myapp -p 8080:80 10.0.40.162:5000/team6/myapp '
 
 
     - name: Cleanup Docker image
       run: |
        docker container rm myappCompiled
        docker image rm myapp/compiled
-        docker container prune
-        docker image prune -a
+       docker container prune
+       docker image prune -a
 
       
 
