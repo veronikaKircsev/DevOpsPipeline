@@ -38,7 +38,7 @@ jobs:
         docker run --rm \
         --volume "$(pwd):/data" \
         --user $(id -u):$(id -g) \
-        pandoc/latex docs/README.md -o documentation.pdf --pdf-engine=xelatex \
+        pandoc/latex docs/README.md -o "documentation.pdf" --pdf-engine=xelatex \
         --standalone --toc --toc-depth=2 --highlight-style=tango
 
     - name: build Mkdocs html
@@ -48,7 +48,7 @@ jobs:
       run: docker build -t custom-docs-nginx -f Dockerfiles/DockerfileNGINX .
 
     - name: Create Runnable Dockerimage for Myapp
-      run: docker build -f Dockerfiles/DockerfileRunnable -t myapp .
+      run: docker buildx build -f Dockerfiles/DockerfileRunnable -t myapp .
 
     - name: Tag the Docker image
       run: docker image tag myapp 10.0.40.162:5000/team6/myapp:${VERSION}
