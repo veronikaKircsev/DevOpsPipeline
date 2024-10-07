@@ -65,15 +65,9 @@ jobs:
         docker image push 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
         docker image push 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
 
-    - name: Create SSH Key
-      run: |
-          mkdir -p ~/.ssh
-          printf "%s" "${{ secrets.PROD_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-
     - name: Deploy on production server
       run: |
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no team6@10.0.40.163 '
+        ssh -i "${{ secrets.PROD_SERVER_SSH_KEY }}" -o StrictHostKeyChecking=no team6@10.0.40.163 '
           docker container stop myapp || true
           docker container stop mydoc || true
           docker container rm myapp || true
