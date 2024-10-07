@@ -38,8 +38,7 @@ jobs:
         docker run --rm \
         --volume "$(pwd):/data" \
         --user $(id -u):$(id -g) \
-        pandoc/latex docs/README.md -o "documentation.pdf" --pdf-engine=xelatex \
-        --standalone --toc --toc-depth=2 --highlight-style=tango
+        pandoc/latex docs/README.md -o "documentation.pdf"
 
     - name: nginx
       run: docker build -t custom-docs-nginx -f Dockerfiles/DockerfileNGINX .
