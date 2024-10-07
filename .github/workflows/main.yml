@@ -54,7 +54,6 @@ jobs:
       run: |
         docker image tag myapp 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
         docker image tag mydoc 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
-      
 
     - name: Push to Registry
       run: |
@@ -75,7 +74,7 @@ jobs:
           docker container rm myapp || true
           docker container rm mydoc || true
           docker run --name myapp -d -p 8089:8080 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
-          docker run --name myDOC -d -p 8088:8080 10.0.40.162:5000/team6/mYDOC:${{ env.VERSION }}
+          docker run --name myDOC -d -p 8080:8080 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
         '
 
 
