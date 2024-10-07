@@ -38,13 +38,14 @@ jobs:
         docker run --rm \
         --volume "$(pwd):/data" \
         --user $(id -u):$(id -g) \
-        pandoc/latex docs/README.md -o "documentation.pdf"
-
-    - name: nginx
-      run: docker build -t custom-docs-nginx -f Dockerfiles/DockerfileNGINX .
+        pandoc/latex docs/README.md -o "documentation.pdf" --pdf-engine=xelatex \
+        --standalone --toc --toc-depth=2 --highlight-style=tango
 
     - name: build Mkdocs html
       run: docker run --rm -v "$(pwd):/docs" -u $(id -u):$(id -g) squidfunk/mkdocs-material -t mydoc build
+
+    - name: nginx
+      run: docker build -t custom-docs-nginx -f Dockerfiles/DockerfileNGINX .
 
     - name: Create Runnable Dockerimage for Myapp
       run: docker build -f Dockerfiles/DockerfileRunnable -t myapp .
