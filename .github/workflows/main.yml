@@ -74,7 +74,7 @@ jobs:
           docker container rm myapp || true
           docker container rm mydoc || true
           docker run --name myapp -d -p 8089:8080 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
-          docker run --name myDOC -d -p 8080:8080 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
+          docker run --name mydoc -d -p 8080:8080 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
         '
 
 
@@ -82,8 +82,8 @@ jobs:
       run: |
        docker container rm myappCompiled || true
        docker image rm myapp/compiled || true
-       docker container prune
-       docker image prune -a
+       docker container prune -f
+       docker image prune -af
 
       
 
