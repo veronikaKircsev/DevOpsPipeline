@@ -16,10 +16,10 @@ jobs:
       
     - name: Show Docker Version
       run: docker --version 
-      
+
     - name: compile App with docker to myapp/compiled image
       run: docker build -t myapp/compiled -f Dockerfiles/DockerfileCompile .
-      
+
     - name: sonarQubeScanner
       run: |
        docker container rm myappCompiled || true
@@ -41,14 +41,14 @@ jobs:
         pandoc/latex docs/README.md -o "documentation.pdf" --pdf-engine=xelatex \
         --standalone --toc --toc-depth=2 --highlight-style=tango
 
-    - name: build Mkdocs html
-      run: docker run --rm -v "$(pwd):/docs" -u $(id -u):$(id -g) squidfunk/mkdocs-material build
-
     - name: nginx
       run: docker build -t custom-docs-nginx -f Dockerfiles/DockerfileNGINX .
 
+    - name: build Mkdocs html
+      run: docker run --rm -v "$(pwd):/docs" -u $(id -u):$(id -g) squidfunk/mkdocs-material -t mydoc build
+
     - name: Create Runnable Dockerimage for Myapp
-      run: docker buildx build -f Dockerfiles/DockerfileRunnable -t myapp .
+      run: docker build -f Dockerfiles/DockerfileRunnable -t myapp .
 
     - name: Tag the Docker image
       run: docker image tag myapp 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
