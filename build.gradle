@@ -35,6 +35,10 @@ bootJar {
     archiveFileName = 'hotel.jar'
 }
 
+jar {
+    archiveFileName = 'hotel-small.jar'
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }
