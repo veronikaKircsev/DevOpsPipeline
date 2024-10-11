@@ -29,10 +29,6 @@ springBoot {
     mainClass = 'at.fhv.lab1.EventBus'
 }
 
-jar {
-    // Setze den festen Namen der JAR-Datei
-    archiveFileName = 'hotel.jar'
-}
 
 bootJar {
     // Setze den festen Namen der JAR-Datei
