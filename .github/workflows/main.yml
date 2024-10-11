@@ -50,7 +50,7 @@ jobs:
         --standalone --toc --toc-depth=2 --highlight-style=tango
 
     - name: build Mkdocs html
-      run: docker run --rm -it -v "${PWD}:/docs" -u $(id -u):$(id -g) squidfunk/mkdocs-material build
+      run: docker run --rm -v "${PWD}:/docs" -u $(id -u):$(id -g) squidfunk/mkdocs-material build
 
     - name: nginx
       run: docker build -t mydoc -f Dockerfiles/DockerfileNGINX .
