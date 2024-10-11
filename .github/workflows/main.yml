@@ -71,7 +71,6 @@ jobs:
          ls
         '
 
-
     - name: Cleanup Docker image
       run: |
        docker container rm myappCompiled || true
