@@ -86,8 +86,8 @@ jobs:
           docker container rm myapp || true
           docker container rm mydoc || true
         
-          docker run --name myapp -d -p 8089:8080 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
-          docker run --name mydoc -d -p 8088:8080 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
+          docker run --name myapp -d -p 8089:8082 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
+          docker run --name mydoc -d -p 8088:80 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
         '
 
     - name: Cleanup Docker image
