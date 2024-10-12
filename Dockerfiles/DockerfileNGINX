@@ -3,6 +3,8 @@ FROM nginx:alpine
 
 COPY site/ /usr/share/nginx/html
 
+COPY documentation.pdf /usr/share/nginx/html/documentation.pdf
+
 EXPOSE 80
 
 # docker run -d -p 8080:80 custom-docs-nginx

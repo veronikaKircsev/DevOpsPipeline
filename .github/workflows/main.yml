@@ -43,11 +43,6 @@ jobs:
         --user $(id -u):$(id -g) \
         pandoc/latex docs/README.md -o "documentation.pdf" --pdf-engine=xelatex \
         --standalone --toc --toc-depth=2 --highlight-style=tango
-        docker run --rm \
-        -v "${PWD}:/data" \
-        -u $(id -u):$(id -g) \
-        pandoc/extra docs/README.md -o "src/main/resources/static/documentation.pdf" \
-        --standalone --toc --toc-depth=2 --highlight-style=tango
 
     - name: build Mkdocs html
       run: docker run --rm -v "${PWD}:/docs" -u $(id -u):$(id -g) squidfunk/mkdocs-material build
