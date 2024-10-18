@@ -2,7 +2,7 @@
 # Docker to create runable image                       #
 ########################################################
 # Use image tag "myapp/compiled" that was used when building
-FROM myapp/compiled AS builder
+FROM hotel/compiled AS builder
 # Use an OpenJDK image to run the application
 FROM openjdk:17-alpine
 
