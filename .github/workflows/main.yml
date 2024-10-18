@@ -51,7 +51,7 @@ jobs:
       run: docker build -t mydoc -f Dockerfiles/DockerfileNGINX .
 
     - name: Create Runnable Dockerimage for Myapp
-      run: docker build -f Dockerfiles/DockerfileRunnable -t myapp .
+      run: docker build -t myapp -f Dockerfiles/DockerfileRunnable .
 
     - name: Tag the Docker image
       run: |
@@ -65,6 +65,7 @@ jobs:
 
     - name: Create SSH Key
       run: |
+        echo ${{ github.workspace }}
         mkdir -p ~/.ssh
         printf "%s" "${{ secrets.PROD_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
@@ -73,15 +74,13 @@ jobs:
       run: |
         ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no team6@10.0.40.163 '
           docker pull 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
-          docker pull 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
-        
           docker container stop myapp || true
-          docker container stop mydoc || true
-        
           docker container rm myapp || true
-          docker container rm mydoc || true
-        
           docker run --name myapp -d -p 8089:8082 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
+          
+          docker pull 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
+          docker container stop mydoc || true
+          docker container rm mydoc || true
           docker run --name mydoc -d -p 8088:80 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
         '
 
