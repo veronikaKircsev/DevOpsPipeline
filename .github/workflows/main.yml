@@ -65,14 +65,12 @@ jobs:
 
     - name: Create SSH Key
       run: |
-        echo ${{ github.workspace }}
-        mkdir -p ~/.ssh
-        printf "%s" "${{ secrets.PROD_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+        printf "%s" "${{ secrets.PROD_SERVER_SSH_KEY }}" > {{ github.workspace }}/id_rsa
+        chmod 600 {{ github.workspace }}/id_rsa
 
     - name: Deploy on production server
       run: |
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no team6@10.0.40.163 '
+        ssh -i {{ github.workspace }}/id_rsa -o StrictHostKeyChecking=no team6@10.0.40.163 '
           docker pull 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
           docker container stop myapp || true
           docker container rm myapp || true
@@ -90,6 +88,8 @@ jobs:
        docker image rm myapp/compiled || true
        docker container prune -f
        docker image prune -af
+       rm {{ github.workspace }}/id_rsa
+        
 
       
 
