@@ -20,14 +20,14 @@ jobs:
     - name: Show Version
       run: echo ${VERSION}
 
-    - name: compile App with docker to myapp/compiled image
-      run: docker build -t myapp/compiled -f Dockerfiles/DockerfileCompile .
+    - name: compile App with docker to hotel/compiled image
+      run: docker build -t hotel/compiled -f Dockerfiles/DockerfileCompile .
 
     - name: sonarQubeScanner
       run: |
-       docker container rm myappCompiled || true
-       docker create --name myappCompiled  myapp/compiled
-       docker cp myappCompiled:app/build/ ./build
+       docker container rm hotelCompiled || true
+       docker create --name hotelCompiled  hotel/compiled
+       docker cp hotelCompiled:app/build/ ./build
        docker run \
        --rm \
        -e SONAR_HOST_URL="${{ vars.URL }}" \
@@ -48,44 +48,44 @@ jobs:
       run: docker run --rm -v "${PWD}:/docs" -u $(id -u):$(id -g) squidfunk/mkdocs-material build
 
     - name: nginx
-      run: docker build -t mydoc -f Dockerfiles/DockerfileNGINX .
+      run: docker build -t hoteldoc -f Dockerfiles/DockerfileNGINX .
 
-    - name: Create Runnable Dockerimage for Myapp
-      run: docker build -t myapp -f Dockerfiles/DockerfileRunnable .
+    - name: Create Runnable Dockerimage for Hotel
+      run: docker build -t hotel -f Dockerfiles/DockerfileRunnable .
 
     - name: Tag the Docker image
       run: |
-        docker image tag myapp 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
-        docker image tag mydoc 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
+        docker image tag hotel 10.0.40.162:5000/team6/hotel:${{ env.VERSION }}
+        docker image tag hoteldoc 10.0.40.162:5000/team6/hoteldoc:${{ env.VERSION }}
 
     - name: Push to Registry
       run: |
-        docker image push 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
-        docker image push 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
+        docker image push 10.0.40.162:5000/team6/hotel:${{ env.VERSION }}
+        docker image push 10.0.40.162:5000/team6/hoteldoc:${{ env.VERSION }}
 
     - name: Create SSH Key
       run: |
-        printf "%s" "${{ secrets.PROD_SERVER_SSH_KEY }}" > {{ github.workspace }}/id_rsa
-        chmod 600 {{ github.workspace }}/id_rsa
+        printf "%s" "${{ secrets.PROD_SERVER_SSH_KEY }}" > ${{ github.workspace }}/id_rsa
+        chmod 600 ${{ github.workspace }}/id_rsa
 
     - name: Deploy on production server
       run: |
-        ssh -i {{ github.workspace }}/id_rsa -o StrictHostKeyChecking=no team6@10.0.40.163 '
-          docker pull 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
-          docker container stop myapp || true
-          docker container rm myapp || true
-          docker run --name myapp -d -p 8089:8082 10.0.40.162:5000/team6/myapp:${{ env.VERSION }}
+        ssh -i ${{ github.workspace }}/id_rsa -o StrictHostKeyChecking=no team6@10.0.40.163 '
+          docker pull 10.0.40.162:5000/team6/hotel:${{ env.VERSION }}
+          docker container stop hotel || true
+          docker container rm hotel || true
+          docker run --name hotel -d -p 16000:8082 10.0.40.162:5000/team6/hotel:${{ env.VERSION }}
           
-          docker pull 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
-          docker container stop mydoc || true
-          docker container rm mydoc || true
-          docker run --name mydoc -d -p 8088:80 10.0.40.162:5000/team6/mydoc:${{ env.VERSION }}
+          docker pull 10.0.40.162:5000/team6/hoteldoc:${{ env.VERSION }}
+          docker container stop hoteldoc || true
+          docker container rm hoteldoc || true
+          docker run --name hoteldoc -d -p 16001:80 10.0.40.162:5000/team6/hoteldoc:${{ env.VERSION }}
         '
 
     - name: Cleanup Docker image
       run: |
-       docker container rm myappCompiled || true
-       docker image rm myapp/compiled || true
+       docker container rm hotelCompiled || true
+       docker image rm hotel/compiled || true
        docker container prune -f
        docker image prune -af
        rm {{ github.workspace }}/id_rsa
